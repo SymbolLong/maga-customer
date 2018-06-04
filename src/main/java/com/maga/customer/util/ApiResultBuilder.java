@@ -29,6 +29,8 @@ public class ApiResultBuilder {
         result.setMessage(message);
         if (jsonObject != null) {
             result.setData(jsonObject);
+        }else{
+            result.setData(new JSONObject());
         }
         return result;
     }
