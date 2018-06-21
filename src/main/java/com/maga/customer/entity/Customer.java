@@ -3,7 +3,6 @@ package com.maga.customer.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class Customer extends BaseEntity implements Serializable {

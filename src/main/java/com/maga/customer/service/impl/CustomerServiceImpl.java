@@ -4,6 +4,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.maga.customer.entity.Customer;
 import com.maga.customer.repository.CustomerRepository;
 import com.maga.customer.service.CustomerService;
+import com.maga.customer.util.Md5Util;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(Customer customer) {
-        customer.setAccessKey(getUUID());
-        customer.setAccessSecret(getUUID());
+        customer.setAccessKey(generateSecret());
+        customer.setAccessSecret(generateSecret());
         return customerRepository.saveAndFlush(customer);
     }
 
@@ -68,8 +69,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer reset(Customer customer) {
-        customer.setAccessKey(getUUID());
-        customer.setAccessSecret(getUUID());
+        customer.setAccessKey(generateSecret());
+        customer.setAccessSecret(generateSecret());
         return customerRepository.saveAndFlush(customer);
     }
 
@@ -100,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
         return json;
     }
 
-    private String getUUID() {
-        return UUID.randomUUID().toString().replace("-", "").toUpperCase();
+    private String generateSecret() {
+        return Md5Util.MD5(UUID.randomUUID().toString()).toUpperCase();
     }
 }

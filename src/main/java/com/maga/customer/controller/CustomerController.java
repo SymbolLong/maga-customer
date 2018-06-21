@@ -27,13 +27,14 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ApiResult update(@PathVariable Long id, @RequestParam String name, @RequestParam String mobile) {
+    public ApiResult update(@PathVariable Long id, @RequestParam String name, @RequestParam String mobile, @RequestParam String remark) {
         Customer customer = customerService.findById(id);
         if (customer == null) {
             return ApiResultBuilder.failure("账户不存在");
         }
         customer.setName(name);
         customer.setMobile(mobile);
+        customer.setRemark(remark);
         customerService.update(customer);
         return ApiResultBuilder.success("修改账户成功", customerService.toJSONObject(customer));
     }
